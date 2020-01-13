@@ -84,6 +84,10 @@ int get_stats(
 			std::to_string(noname_core::network::bswap16(port.get_des_port())), 
 			packet.header->caplen
 		);
+
+		for (auto& i : mac_stat) ret_mac.insert(i);
+		for (auto& i : ip_stat) ret_ip.insert(i);
+		for (auto& i : port_stat) ret_port.insert(i);
 	}
 	return 0;
 }
