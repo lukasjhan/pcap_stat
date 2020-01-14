@@ -117,10 +117,10 @@ namespace noname_core {
 		inline std::string ip_address::to_string() const
 		{
 			std::ostringstream ss;
-			ss << static_cast<int>(address[0]) << "."
-				<< static_cast<int>(address[1]) << "."
+			ss << static_cast<int>(address[3]) << "."
 				<< static_cast<int>(address[2]) << "."
-				<< static_cast<int>(address[3]);
+				<< static_cast<int>(address[1]) << "."
+				<< static_cast<int>(address[0]);
 			return ss.str();
 		}
 
