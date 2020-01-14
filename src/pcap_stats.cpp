@@ -17,6 +17,14 @@ struct packet_and_bytes {
 
 struct send_data {
 	packet_and_bytes tx, rx;
+
+	send_data operator+ (const send_data& data) {
+		tx.bytes += data.tx.bytes;
+		tx.packet += data.tx.packet;
+		rx.bytes += data.rx.bytes;
+		rx.packet += data.rx.packet;
+		return *this;
+	}
 };
 
 struct Packet {
@@ -85,9 +93,9 @@ int get_stats(
 			packet.header->caplen
 		);
 
-		for (auto& i : mac_stat) ret_mac.insert(i);
-		for (auto& i : ip_stat) ret_ip.insert(i);
-		for (auto& i : port_stat) ret_port.insert(i);
+		for (auto& i : mac_stat) { if (ret_mac.count(i.first) > 0) ret_mac[i.first] += i.second; else ret_mac.insert(i); }
+		for (auto& i : ip_stat) { if (ip_stat.count(i.first) > 0) ip_stat[i.first] += i.second; else ip_stat.insert(i); }
+		for (auto& i : port_stat) { if (port_stat.count(i.first) > 0) port_stat[i.first] += i.second; else port_stat.insert(i); }
 	}
 	return 0;
 }
