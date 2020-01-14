@@ -42,11 +42,11 @@ void setup_map(
 	auto key = std::make_pair(src, des);
 	auto reverse_key = std::make_pair(des, src);
 
-	if (ret.count(key) > 0) {
+	if (!ret.count(key)) {
 		ret[key].tx.bytes += bytes;
 		ret[key].tx.packet += 1;
 	}
-	else if (ret.count(reverse_key) > 0) {
+	else if (!ret.count(reverse_key)) {
 		ret[reverse_key].rx.bytes += bytes;
 		ret[reverse_key].rx.packet += 1;
 	}
