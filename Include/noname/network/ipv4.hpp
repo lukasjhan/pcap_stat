@@ -5,21 +5,7 @@
 #include "utils.hpp"
 
 #include <optional>
-
-#ifdef _WIN32
-#include <WinSock2.h>
-#include <iphlpapi.h>
-#pragma comment(lib, "iphlpapi.lib")
-
-#endif // _WIN32
-
-#ifdef __linux__
-#include <net/if.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/ether.h>
-#endif // __linux__
+#include <iterator>
 
 namespace noname_core {
 	namespace network {
@@ -104,14 +90,12 @@ namespace noname_core {
 
 		inline ip_address::ip_address(const uint8_t* data) : address{ 0 }
 		{
-			for (int i = 0; i < LEN; ++i)
-				address[i] = data[i];
+			std::copy(address, address+3, data);
 		}
 
 		inline ip_address::ip_address(const ip_address& i) : address{ 0 }
 		{
-			for (int j = 0; j < LEN; ++j)
-				address[j] = i.address[j];
+			std::copy(address, address+3, i.address);
 		}
 
 		inline std::string ip_address::to_string() const
